@@ -19,7 +19,7 @@ class Departamentos(models.Model):
 
 
 class Areas(models.Model):
-	   
+
 	Nombre = models.CharField(max_length=30)
 	Departamentos=models.ManyToManyField(Departamentos,blank=True)
 
@@ -44,8 +44,6 @@ class Profesores(models.Model):
 	Etcp = models.BooleanField(default=False)
 	Tic = models.BooleanField(default=False)
 	Bil = models.BooleanField(default=False,verbose_name="Bilingüe")
-	
-	
 
 	def __str__(self):
 		return self.Nombre+" "+self.Apellidos
@@ -55,7 +53,7 @@ class Profesores(models.Model):
 		verbose_name_plural="Profesores"
 
 class Cursos(models.Model):
-	
+
 	Curso = models.CharField(max_length=30)
 	Tutor = models.ForeignKey(Profesores, related_name='Tutor_de',blank=True,null=True,on_delete=models.SET_NULL)
 	EquipoEducativo=models.ManyToManyField(Profesores, verbose_name="Equipo Educativo",blank=True)
@@ -84,10 +82,19 @@ class Alumnos(models.Model):
 	Obs=models.TextField(blank=True,verbose_name="Observaciones")
 
 	def __str__(self):
-		return self.DNI+" - "+self.Nombre 
+		return self.DNI+" - "+self.Nombre
 
 	class Meta:
 		verbose_name="Alumno"
 		verbose_name_plural="Alumnos"
 
 
+class Modulos(models.Model):
+    Abr = models.CharField(max_length=4)
+    Nombre = models.CharField(max_length=50)
+    Unidad = models.ForeignKey(Cursos,blank=True,null=True,on_delete=models.SET_NULL)
+    def __unicode__(self):
+        return self.Abr+" - "+self.Nombre
+    class Meta:
+        verbose_name="Modulo"
+        verbose_name_plural="Modulos"
